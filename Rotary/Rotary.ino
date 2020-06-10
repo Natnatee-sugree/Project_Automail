@@ -23,13 +23,13 @@
 
      if (digitalRead(5) != currentStateCLK) 
      { 
-       counter --;
+       counter ++;
        encdir ="Core value ";
        digitalWrite(8, HIGH);
 
      } else {
 
-       counter ++;
+       counter --;
        encdir ="Core value";
        digitalWrite(8, LOW);
      }
