@@ -7,8 +7,7 @@
  void setup() 
  {  
    pinMode (4,INPUT);// กำหนดค่า 4 เป็นแบบ Input 
-   pinMode (5,INPUT);// กำหนดค่า 5 เป็นแบบ Input 
-   pinMode (8,OUTPUT);// กำหนดค่า 8 เป็นแบบ OUTPUT 
+   pinMode (5,INPUT);// กำหนดค่า 5 เป็นแบบ Input  
    Serial.begin (9600); 
    previousState = digitalRead(4);// อ่านค่าสถานะขา 4
    
@@ -32,6 +31,7 @@
      }
      Serial.print(encdir);// แสดงผลคำตัวแปล
      Serial.println(counter);// แสดงผลค่า
+     
    } 
    // อัปเดตค่าด้วยค่าปัจจุบัน
    previousState = currentState; 

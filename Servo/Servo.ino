@@ -3,6 +3,7 @@ Servo myservo; //ประกาศตัวแปรแทน Servo
 void setup()
 {
 myservo.attach(9); // กำหนดขา 9 ควบคุม Servo
+myservo.attach(10); 
 }
 void loop()
 {
