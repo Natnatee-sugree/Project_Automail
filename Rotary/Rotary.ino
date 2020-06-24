@@ -22,11 +22,13 @@
 
      if (digitalRead(5) != currentState) // ค่าสถานะขา 5 ไม่เท่ากับตัวแปร currentState
      { 
-       counter --; // แสดงผลลดลง 
+       if (counter>179)counter=179;
+       counter ++; // แสดงผลลดลง 
        encdir ="Core value : ";// แสดงผลคำ Core value : ใน Serial monitor
      } else 
      {
-       counter ++; // แสดงผลเพิ่มขึ้น
+       if (counter<1)counter=1;
+       counter --; // แสดงผลเพิ่มขึ้น
        encdir ="Core value : ";
      }
      Serial.print(encdir);// แสดงผลคำตัวแปล

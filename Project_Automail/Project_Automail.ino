@@ -1,82 +1,127 @@
 #include <Servo.h>
-Servo myServo_0;  
-Servo myServo_1;
-int counter = 0; // กำหนดค่าเริ่มเป็น 0
-String encdir ; 
-int currentState;
-int previousState;
-Servo myServo_2;
-int currentState1;
-int previousState1;
-int counter1 = 0;
-String encdir1 ;
-void setup()
+#include "LiquidCrystal_I2C.h"
+#define sensorPin A1
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+//SERVO_0
+Servo myservo_0;
+int counter_0 = 0;
+int currentState_0;
+int previousState_0; 
+String encdir_0 = "SERVO 0 :";  
+//SERVO_1
+Servo myservo_1;
+int counter_1 = 0; 
+int currentState_1;
+int previousState_1; 
+String encdir_1 = "SERVO 1 :";
+//SERVO_2
+Servo myservo_2;
+int counter_2 = 0; 
+int currentState_2;
+int previousState_2; 
+String encdir_2 = "SERVO 2 :";
+ void setup() 
+ {  
+   pinMode (2,INPUT);
+   pinMode (3,INPUT);
+   pinMode (4,INPUT);
+   pinMode (5,INPUT);
+   pinMode (6,INPUT);
+   pinMode (7,INPUT);  
+   pinMode(sensorPin, INPUT);
+   myservo_0.attach(11);
+   myservo_1.attach(9);
+   myservo_2.attach(10);
+   Serial.begin (9600); 
+   previousState_0 = digitalRead(2);
+   previousState_1 = digitalRead(4);
+   previousState_2 = digitalRead(6);
+   lcd.init();
+   lcd.backlight();
+   lcd.setCursor(0, 0);
+   lcd.print("Automail Ready"); 
+ } 
+void SERVO_0()
 {
-  pinMode(13,OUTPUT);
-  Serial.begin(9600);
-  myServo_0.attach(9); 
-  myServo_1.attach(10); 
-  myServo_2.attach(11); 
-  pinMode (4,INPUT);// กำหนดค่า 4 เป็นแบบ Input 
-  pinMode (5,INPUT);// กำหนดค่า 5 เป็นแบบ Input
-  pinMode (6,INPUT); 
-  pinMode (7,INPUT);
-  previousState = digitalRead(4);
-  previousState1 = digitalRead(6);
-}
-void servo_1()
-{
- currentState = digitalRead(4);
- if (currentState != previousState) 
+currentState_0 = digitalRead(2);
+
+   if (currentState_0 != previousState_0) 
    { 
-     if (digitalRead(5) != currentState ) 
+
+     if (digitalRead(3) != currentState_0)
      { 
-       encdir ="Core value : ";
-       counter --;
-       if (counter<0)
-	   counter=0; 
+       if (counter_0>179)counter_0=179;
+       counter_0 ++;
      } else 
      {
-       encdir ="Core value : ";
-       counter ++; // แสดงผลเพิ่มขึ้น
-       if (counter>180)
-	   counter=180;
+       if (counter_0<1)counter_0=1;
+       counter_0 --;
      }
-     Serial.print(encdir);// แสดงผลคำตัวแปล
-     Serial.println(counter);// แสดงผลค่า
-     myServo_1.write(counter);
+     Serial.print(encdir_0);
+     Serial.println(counter_0);
+     myservo_0.write(counter_0);
+     lcd.clear();
+     lcd.print(encdir_0);
+     lcd.print(int(counter_0));
+     lcd.setCursor(0,0);
    } 
-    previousState = currentState; 
+   previousState_0 = currentState_0;                                                
 }
-void servo_2()
+void SERVO_1()
 {
-    currentState1 = digitalRead(6);
-    if(currentState1 != previousState1)
-    {
-       if(digitalRead(7) != currentState1)
-       {
-         encdir1 = "Core value_2 : ";
-         counter1 --;
-         if(counter1<0)
-         counter1=0;
-       } else
-       {
-           encdir1 = "Core value_2 : ";
-           counter1 ++;
-           if(counter1>180)
-           counter1=180;
-       }
-     Serial.print(encdir1);// แสดงผลคำตัวแปล
-     Serial.println(counter1);// แสดงผลค่า
-     myServo_2.write(counter1);
-    }
-    previousState1 = currentState1; 
+   currentState_1 = digitalRead(4);
+
+   if (currentState_1 != previousState_1) 
+   { 
+
+     if (digitalRead(5) != currentState_1)
+     { 
+       if (counter_1>179)counter_1=179;
+       counter_1 ++;
+     } else 
+     {
+       if (counter_1<1)counter_1=1;
+       counter_1 --;
+     }
+     Serial.print(encdir_1);
+     Serial.println(counter_1);
+     myservo_1.write(counter_1);
+     lcd.clear();
+     lcd.print(encdir_1);
+     lcd.print(int(counter_1));
+     lcd.setCursor(0,0);
+   } 
+   previousState_1 = currentState_1;
+} 
+void SERVO_2()
+{
+   currentState_2 = digitalRead(6);
+
+   if (currentState_2 != previousState_2) 
+   { 
+
+     if (digitalRead(7) != currentState_2)
+     { 
+       if (counter_2>179)counter_2=179;
+       counter_2 ++;
+     } else 
+     {
+       if (counter_2<1)counter_2=1;
+       counter_2 --;
+     }
+     Serial.print(encdir_2);
+     Serial.println(counter_2);
+     myservo_2.write(counter_2);
+     lcd.clear();
+     lcd.print(encdir_2);
+     lcd.print(int(counter_2));
+     lcd.setCursor(0,0);
+   } 
+   previousState_2 = currentState_2;
 }
-void loop()
-{           
-  servo_1();
-  servo_2();
-  int analog_0 = analogRead(A0);           
-  int counter_0 = map(analog_0, 0, 1023, 0, 180);     
-  myServo_0.write(counter_0);              
+void loop() 
+{ 
+SERVO_0();
+SERVO_1();
+SERVO_2();
 }
