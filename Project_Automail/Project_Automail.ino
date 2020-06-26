@@ -1,7 +1,7 @@
 #include <Servo.h>
 #include "LiquidCrystal_I2C.h"
 #define sensorPin A1
-LiquidCrystal_I2C lcd(0x27, 16, 2);
+LiquidCrystal_I2C lcd(0x27, 16, 2); // // จอกว้าง 16 ตัวอักษร 2 บรรทัด รหัสประจำตัว 0x27
 //SERVO_0
 Servo myservo_0;
 int counter_0 = 0;
@@ -43,9 +43,11 @@ String encdir_2 = "SERVO 2 :";
  } 
 void SERVO_0()
 {
-currentState_0 = digitalRead(2);
+currentState_0 = digitalRead(2); 
+// อ่านสถานะ "ปัจจุบัน" ของ digitalRead(2)
+// ถ้าสถานะก่อนหน้าและสถานะปัจจุบันของเอาต์พุต digitalRead(2) นั้นแตกต่างกันนั่นหมายความว่า Pulse เกิดขึ้นแล้ว
 
-   if (currentState_0 != previousState_0) 
+   if (currentState_0 != previousState_0) // ถ้าสถานะ ocurrentState_0  แตกต่างจากสถานะ previousState_0 นั่นหมายความว่าตัวเข้ารหัสกำลังหมุนตามเข็มนาฬิกา
    { 
 
      if (digitalRead(3) != currentState_0)
@@ -65,7 +67,7 @@ currentState_0 = digitalRead(2);
      lcd.print(int(counter_0));
      lcd.setCursor(0,0);
    } 
-   previousState_0 = currentState_0;                                                
+   previousState_0 = currentState_0; // อัปเดตสถานะก่อนหน้าของ previousState_0  ด้วยสถานะปัจจุบัน                                                 
 }
 void SERVO_1()
 {
